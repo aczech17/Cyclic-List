@@ -1,3 +1,12 @@
 # depslib dependency file v1.0
-1489058015 source:c:\users\tytjan17\documents\programowanie\project2\main.cpp
+1489149304 source:c:\users\tytjan17\documents\programowanie\project2\main.cpp
+	<iostream>
+	"cyclist.h"
+
+1489149326 source:c:\users\tytjan17\documents\programowanie\project2\cyclist.cpp
+	"cyclist.h"
+	<iostream>
+	<stdlib.h>
+
+1489148872 c:\users\tytjan17\documents\programowanie\project2\cyclist.h
 
