@@ -15,6 +15,7 @@ class CycList
 	Node *last;
 	int lSize;
 	Node* newNode(int idParam, int valParam);
+	void deleteNode(Node*);
 public:
 	~CycList();
 	CycList(Node* firstParam = nullptr, Node* lastParam = nullptr);

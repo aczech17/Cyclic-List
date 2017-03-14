@@ -3,14 +3,17 @@
 #include <iostream>
 using std::cin;
 using std::cout;
+using std::endl;
 int main()
 {
 	CycList c;
-	c.pushFirst(2, 2);
-	c.pushFirst(1, 1);
-	c.pushLast(3, 3);
+	c.pushLast(1, 1);
+	c.pushLast(2, 10);
+	c.deleteIndex(1);
+	c.deleteIndex(2);
+	c.deleteIndex(0);
 	c.show();
-	cout << "Rozmiar listy = " << c.quantity();;
+	cout << "Rozmiar listy = " << c.quantity();
 	_getch();
 	return 0;
 }
