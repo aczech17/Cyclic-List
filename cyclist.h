@@ -13,10 +13,11 @@ class CycList
 	};//Node
 	Node *first;
 	Node *last;
-	bool lEmpty;
+	int lSize;
+	Node* newNode(int idParam, int valParam);
 public:
 	~CycList();
-	CycList(Node* firstParam = nullptr, Node* lastParam = nullptr, bool lEmp = 1);
+	CycList(Node* firstParam = nullptr, Node* lastParam = nullptr);
 	void pushFirst(int idNew, int val);//id of new node, value of new node
 	void pushLast(int idNew, int val);//id of new node, value of new node
 	void pushAfter(int id, int idNew, int val);//id of previous node, id of new node, value of new node

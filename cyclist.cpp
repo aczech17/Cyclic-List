@@ -2,11 +2,11 @@
 #include <iostream>
 using std::cout;
 using std::endl;
-CycList::CycList(Node* firstParam, Node* lastParam, bool lEmptyParam)
+CycList::CycList(Node* firstParam, Node* lastParam)
 {
 	this->first = firstParam;
 	this->last = lastParam;
-	this->lEmpty = lEmptyParam;
+	lSize = 0;
 }
 CycList::~CycList()
 {
@@ -25,16 +25,15 @@ CycList::~CycList()
 		}
 	}
 }
-void CycList::pushFirst(int indexParam, int valParam)
+CycList::Node* CycList::newNode(int indexParam, int valParam)
 {
 	Node *tmp = new Node;
 	tmp->index = indexParam;
 	tmp->value = valParam;
-	if (this->lEmpty)
+	if (lSize==0)
 	{
 		tmp->next = tmp;
 		tmp->prev = tmp;
-		last = tmp;
 	}
 	else
 	{
@@ -43,8 +42,22 @@ void CycList::pushFirst(int indexParam, int valParam)
 		last->next = tmp;
 		tmp->prev = last;
 	}
-	first = tmp;
-	this->lEmpty = 0;
+	lSize++;
+	return tmp;
+}
+void CycList::pushFirst(int indexParam, int valParam)
+{
+	first = newNode(indexParam, valParam);
+	if (lSize == 1) last = first;
+}
+void CycList::pushLast(int indexParam, int valParam)
+{
+	last = newNode(indexParam, valParam);
+	if (lSize == 1) first = last;
+}
+int CycList::quantity()
+{
+	return lSize;
 }
 void CycList::show()
 {
