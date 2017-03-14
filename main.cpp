@@ -1,14 +1,13 @@
-#include <iostream>
 #include "cyclist.h"
-using std::cin;
-using std::cout;
-using std::endl;
+#include <conio.h>
 int main()
 {
-    CycList c;
-    c.pushFirst(1,10);
-    c.pushFirst(2,20);
-    c.pushFirst(3,30);
-    c.show();
-    return 0;
+	CycList c;
+	for (int i = 1; i <= 100; i++)
+	{
+		c.pushFirst(i, i*i);
+	}
+	c.show();
+	_getch();
+	return 0;
 }
