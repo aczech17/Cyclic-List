@@ -1,3 +1,5 @@
+#include <iostream>
+using std::string;
 class CycList
 {
 	class Node
@@ -13,15 +15,18 @@ class CycList
 	};//Node
 	Node *first;
 	Node *last;
-	bool lEmpty;
+	int lSize;
+	Node* newNode(int idParam, int valParam);
+	void deleteNode(Node*);
+	void findToDelete(string param, int var);
 public:
 	~CycList();
-	CycList(Node* firstParam = nullptr, Node* lastParam = nullptr, bool lEmp = 1);
+	CycList(Node* firstParam = nullptr, Node* lastParam = nullptr);
 	void pushFirst(int idNew, int val);//id of new node, value of new node
 	void pushLast(int idNew, int val);//id of new node, value of new node
 	void pushAfter(int id, int idNew, int val);//id of previous node, id of new node, value of new node
 	void pushBefore(int id, int idNew, int val);
-	void pushIndex(int val, int id);
+	void pushIndex(int id, int val);//wstawienie w miejsce wyznaczone przez indeks
 	void deleteIndex(int id);
 	void deleteValue(int val);
 	void deleteBetween(int low, int high);
@@ -29,8 +34,8 @@ public:
 	//void deleteBefore(int id);
 	void deleteFirst();
 	void deleteLast();
-	void NodeValue(int value);
-	void NodeIndex(int id);
+	//void NodeValue(int value);
+	//void NodeIndex(int id);
 	void deleteRepeats();
 	int quantity();
 	void show();

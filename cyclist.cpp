@@ -2,11 +2,12 @@
 #include <iostream>
 using std::cout;
 using std::endl;
-CycList::CycList(Node* firstParam, Node* lastParam, bool lEmptyParam)
+using std::string;
+CycList::CycList(Node* firstParam, Node* lastParam)
 {
 	this->first = firstParam;
 	this->last = lastParam;
-	this->lEmpty = lEmptyParam;
+	lSize = 0;
 }
 CycList::~CycList()
 {
@@ -25,16 +26,15 @@ CycList::~CycList()
 		}
 	}
 }
-void CycList::pushFirst(int indexParam, int valParam)
+CycList::Node* CycList::newNode(int indexParam, int valParam)
 {
 	Node *tmp = new Node;
 	tmp->index = indexParam;
 	tmp->value = valParam;
-	if (this->lEmpty)
+	if (lSize==0)
 	{
 		tmp->next = tmp;
 		tmp->prev = tmp;
-		last = tmp;
 	}
 	else
 	{
@@ -43,18 +43,159 @@ void CycList::pushFirst(int indexParam, int valParam)
 		last->next = tmp;
 		tmp->prev = last;
 	}
-	first = tmp;
-	this->lEmpty = 0;
+	lSize++;
+	return tmp;
+}
+void CycList::deleteNode(Node *n)
+{
+	if (!n) return;
+	n->prev->next = n->next;
+	n->next->prev = n->prev;
+	if (n == first) first = first->next;
+	if (n == last) last = last->prev;
+	delete n;
+	lSize--;
+	if (lSize == 0)
+	{
+		first = nullptr;
+		last = nullptr;
+	}
+}
+void CycList::pushFirst(int indexParam, int valParam)
+{
+	first = newNode(indexParam, valParam);
+	if (lSize == 1) last = first;
+}
+void CycList::pushLast(int indexParam, int valParam)
+{
+	last = newNode(indexParam, valParam);
+	if (lSize == 1) first = last;
+}
+void CycList::pushAfter(int id, int idNew, int val)
+{
+		Node *tmp = new Node;
+		tmp->index = idNew;
+		tmp->value = val;
+		for (Node *i = first; i != last; i = i->next)
+		{
+			if (i->index == id)
+			{
+				tmp->next = i->next;
+				tmp->prev = i;
+				i->next->prev = tmp;
+				i->next = tmp;
+				lSize++;
+				return;
+			}//if
+		}//for
+		if (last && last->index == id) pushLast(idNew, val);
+}
+void CycList::pushBefore(int id, int idNew, int val)
+{
+	Node *tmp = new Node;
+	tmp->index = idNew;
+	tmp->value = val;
+	if (!first) return;
+	if (first->index == id) pushFirst(idNew, val);
+	else for (Node *i = first->next; i != first; i = i->next)
+	{
+		if (i->index == id)
+		{
+			tmp->prev = i->prev;
+			tmp->next = i;
+			i->prev->next = tmp;
+			i->prev = tmp;
+			lSize++;
+			return;
+		}
+	}
+}
+void CycList::pushIndex(int id, int val)
+{
+	Node *i = first;
+	while (i != last)
+	{
+		if (i->index == id)
+		{
+			i->value = val;
+			return;
+		}
+		i = i->next;
+	}
+	if (last->index == id) last->value = val;
+}
+void CycList::findToDelete(string param, int var)//delete index or delete value var2=value or index
+{
+	Node *i = first;
+	Node *j = i;
+	while (j != last)
+	{
+		if( (param=="index" && i->index==var) || (param=="value" && i->value==var) )
+		{
+			j = i->next;
+			deleteNode(i);
+			if (this->quantity() != 0) i = j;
+			else j = nullptr;
+		}
+		else
+		{
+			i = i->next;
+			j = i;
+		}
+	}
+	if (last)
+		if ((param == "index" && last->index == var) || (param == "value" && last->value == var)) deleteNode(last);
+}
+void CycList::deleteIndex(int id)
+{
+	findToDelete("index", id);
+}
+void CycList::deleteValue(int val)
+{
+	findToDelete("value", val);
+}
+void CycList::deleteBetween(int low, int high)
+{
+	Node *i = first;
+	Node *j = i;
+	while (j != last)
+	{
+		if (i->value >= low && i->value <= high)
+		{
+			j = i->next;
+			deleteNode(i);
+			if (this->quantity() != 0) i = j;
+			else j = nullptr;
+		}
+		else
+		{
+			i = i->next;
+			j = j->next;
+		}
+		if (last && last->value >= low && last->value <= high) deleteNode(last);
+	}
+}
+void CycList::deleteFirst()
+{
+	deleteNode(first);
+}
+void CycList::deleteLast()
+{
+	deleteNode(last);
+}
+int CycList::quantity()
+{
+	return lSize;
 }
 void CycList::show()
 {
 	cout << "Index\tValue" << endl;
 	Node *i = first;
-	while (i != last)
+	while (i && i != last)
 	{
 		cout << i->index << '\t' << i->value << endl;
 		i = i->next;
 	}
-	cout << last->index << '\t' << last->value << endl;
+	if(last) cout << last->index << '\t' << last->value << endl;
 	return;
 }
