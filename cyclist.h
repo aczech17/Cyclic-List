@@ -21,7 +21,7 @@ class CycList
 	void findToDelete(string param, int var);
 public:
 	~CycList();
-	CycList(Node* firstParam = nullptr, Node* lastParam = nullptr);
+	CycList(Node* firstParam = NULL, Node* lastParam = NULL);
 	void pushFirst(int idNew, int val);//id of new node, value of new node
 	void pushLast(int idNew, int val);//id of new node, value of new node
 	void pushAfter(int id, int idNew, int val);//id of previous node, id of new node, value of new node
@@ -30,20 +30,20 @@ public:
 	void deleteIndex(int id);
 	void deleteValue(int val);
 	void deleteBetween(int low, int high);
-	//void deleteAfter(int id);
-	//void deleteBefore(int id);
 	void deleteFirst();
 	void deleteLast();
-	//void NodeValue(int value);
-	//void NodeIndex(int id);
+	Node* nodeValue(int val);//pobranie z listy elementu o okreœlonej wartoœci
+	Node* nodeIndex(int id);//--------------||------------ o okreœlonym indeksie
 	void deleteRepeats();
 	int quantity();
 	void show();
-	bool operator+(CycList);
+	void operator=(const CycList c);
+	CycList operator+(CycList);
 	bool operator-(CycList);
 	void operator<<(Node n);//dostep do elementu
 	void operator/(int id);//usuwanie elementu
 	void operator&(Node n);//kopiowanie elementu
-	void operator<(Node n);
-	void operator>(Node n);
+	bool operator<(CycList);
+	bool operator>(CycList);
+	bool operator==(CycList);
 };

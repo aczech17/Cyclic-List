@@ -12,13 +12,13 @@ CycList::CycList(Node* firstParam, Node* lastParam)
 CycList::~CycList()
 {
 	Node *i = this->first;
-	Node *j = nullptr;
-	if (last) last->next = nullptr;
+	Node *j = NULL;
+	if (last) last->next = NULL;
 	if (i) j = i->next;
 	while (i)
 	{
 		delete i;
-		i = nullptr;
+		i = NULL;
 		if (j)
 		{
 			i = j;
@@ -57,8 +57,8 @@ void CycList::deleteNode(Node *n)
 	lSize--;
 	if (lSize == 0)
 	{
-		first = nullptr;
-		last = nullptr;
+		first = NULL;
+		last = NULL;
 	}
 }
 void CycList::pushFirst(int indexParam, int valParam)
@@ -128,23 +128,21 @@ void CycList::findToDelete(string param, int var)//delete index or delete value 
 {
 	Node *i = first;
 	Node *j = i;
-	while (j != last)
+	if(i) do
 	{
 		if( (param=="index" && i->index==var) || (param=="value" && i->value==var) )
 		{
 			j = i->next;
 			deleteNode(i);
 			if (this->quantity() != 0) i = j;
-			else j = nullptr;
+			else j = NULL;
 		}
 		else
 		{
 			i = i->next;
 			j = i;
 		}
-	}
-	if (last)
-		if ((param == "index" && last->index == var) || (param == "value" && last->value == var)) deleteNode(last);
+	}while (j != first);
 }
 void CycList::deleteIndex(int id)
 {
@@ -157,23 +155,22 @@ void CycList::deleteValue(int val)
 void CycList::deleteBetween(int low, int high)
 {
 	Node *i = first;
-	Node *j = i;
-	while (j != last)
+	Node *j = first;
+	if(i) do
 	{
 		if (i->value >= low && i->value <= high)
 		{
 			j = i->next;
 			deleteNode(i);
 			if (this->quantity() != 0) i = j;
-			else j = nullptr;
+			else j = NULL;
 		}
 		else
 		{
 			i = i->next;
 			j = j->next;
 		}
-		if (last && last->value >= low && last->value <= high) deleteNode(last);
-	}
+	}while (j != first);
 }
 void CycList::deleteFirst()
 {
@@ -183,6 +180,26 @@ void CycList::deleteLast()
 {
 	deleteNode(last);
 }
+CycList::Node* CycList::nodeValue(int val)
+{
+    Node *i=first;
+    if(i) do
+    {
+        if(i->value==val) return i;
+        i=i->next;
+    }while(i!=first);
+    return NULL;
+}
+CycList::Node* CycList::nodeIndex(int id)
+{
+    Node *i=first;
+    if(i) do
+    {
+        if(i->index==id) return i;
+        i=i->next;
+    }while(i!=first);
+    return NULL;
+}
 int CycList::quantity()
 {
 	return lSize;
@@ -191,11 +208,52 @@ void CycList::show()
 {
 	cout << "Index\tValue" << endl;
 	Node *i = first;
-	while (i && i != last)
-	{
-		cout << i->index << '\t' << i->value << endl;
-		i = i->next;
-	}
-	if(last) cout << last->index << '\t' << last->value << endl;
-	return;
+	if(i) do
+    {
+        cout<<i->index<<'\t'<<i->value<<endl;
+        i=i->next;
+    }while(i!=first);
+}
+bool CycList::operator==(CycList c)
+{
+    if(this->quantity()!=c.quantity()) return 0;
+    if(this->quantity()==0) return 1;
+    Node *i=this->first;
+    Node *j=c.first;
+    do
+    {
+        if(i->index!=j->index || i->value!=j->value) return 0;
+        i=i->next;
+        j=j->next;
+    }while(i!=this->first);
+    return 1;
+}
+bool CycList::operator<(CycList c)
+{
+    if(this->quantity()<c.quantity()) return 1;
+    return 0;
+}
+bool CycList::operator>(CycList c)
+{
+    if(this->quantity()>c.quantity()) return 1;
+    return 0;
+}
+void CycList::operator=(const CycList c)
+{
+    this->~CycList();
+    this->first=NULL;
+    this->last=NULL;
+    this->lSize=0;
+}
+CycList CycList::operator+(const CycList c)
+{
+
+    CycList a=*this;
+    Node *i=c.first;
+    if(i) do
+    {
+        a.pushFirst(i->index,i->value);
+        i=i->next;
+    }while(i!=c.first);
+    return a;
 }
