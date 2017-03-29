@@ -354,5 +354,5 @@ void CycList::deleteRepeats()
         else deleteNode(i);
         i=i->next;
     }while(i!=first);
-    delete rep;
+    delete [] rep;
 }
