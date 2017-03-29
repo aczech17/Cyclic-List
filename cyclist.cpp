@@ -253,6 +253,10 @@ bool CycList::operator>=(CycList& c)
 {
     return this->quantity()>c.quantity() || this->quantity()==c.quantity();
 }
+bool CycList::operator!=(CycList& c)
+{
+    return !(*this==c);
+}
 CycList CycList::operator+(const CycList& c)
 {
     CycList x;
@@ -331,4 +335,9 @@ CycList CycList::operator-(CycList& c)
         }while(j!=c.first);
     }
     return n;
+}
+void CycList::operator!()
+{
+    while(this->quantity()>0)
+        this->deleteFirst();
 }

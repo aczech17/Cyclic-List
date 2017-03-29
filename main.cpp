@@ -13,7 +13,7 @@ int main()
 //	a.pushLast(2,2);
 //	a.pushLast(3,3);
 //	a.pushLast(4,4);
-	a.pushLast(5,5);
+
 
     b.pushLast(1,4);
 	b.pushLast(8,8);
@@ -22,5 +22,6 @@ int main()
     b.pushLast(1,2);
 
 	CycList c=a-b;
+	!c;
 	c.show();
 }
