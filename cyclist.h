@@ -1,3 +1,5 @@
+#ifndef CYC_LIST
+#define CYC_LIST
 #include <iostream>
 using std::string;
 class CycList
@@ -37,13 +39,16 @@ public:
 	void deleteRepeats();
 	int quantity();
 	void show();
-	void operator=(const CycList c);
-	CycList operator+(CycList);
-	bool operator-(CycList);
+	void operator=(CycList);
+	CycList operator+(const CycList&);
+	CycList operator-(CycList&);
 	void operator<<(Node n);//dostep do elementu
 	void operator/(int id);//usuwanie elementu
 	void operator&(Node n);//kopiowanie elementu
-	bool operator<(CycList);
-	bool operator>(CycList);
-	bool operator==(CycList);
+	bool operator<(CycList&);
+	bool operator<=(CycList& c);
+	bool operator>(CycList&);
+	bool operator>=(CycList& c);
+	bool operator==(CycList&);
 };
+#endif
