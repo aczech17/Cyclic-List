@@ -42,8 +42,6 @@ public:
 	void operator=(CycList);
 	CycList operator+(const CycList&);
 	CycList operator-(CycList&);
-	void operator<<(Node n);//dostep do elementu
-	void operator&(Node n);//kopiowanie elementu
 	bool operator<(CycList&);
 	bool operator<=(CycList& c);
 	bool operator>(CycList&);

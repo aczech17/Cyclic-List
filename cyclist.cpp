@@ -1,5 +1,6 @@
 #include "cyclist.h"
 #include <iostream>
+#include <climits>
 using std::cout;
 using std::endl;
 using std::string;
@@ -340,4 +341,18 @@ void CycList::operator!()
 {
     while(this->quantity()>0)
         this->deleteFirst();
+}
+void CycList::deleteRepeats()
+{
+    const int n=1000000000;
+    bool *rep=new bool[n]; //[-n/2+1,n/2]
+    const int x=n/2-1;
+    Node *i=first;
+    if(i) do
+    {
+        if(rep[i->value+x]==0) rep[i->value+x]++;
+        else deleteNode(i);
+        i=i->next;
+    }while(i!=first);
+    delete rep;
 }
