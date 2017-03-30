@@ -43,6 +43,7 @@ public:
 	void operator=(CycList);
 	CycList operator+(const CycList&);
 	CycList operator-(CycList&);
+	void operator+=(const CycList&);
 	bool operator<(CycList&);
 	bool operator<=(CycList& c);
 	bool operator>(CycList&);

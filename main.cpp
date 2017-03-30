@@ -9,12 +9,11 @@ using std::endl;
 int main()
 {
 	CycList a,b;
-	b.pushLast(21);
-	b.pushLast(37);
-	b.pushLast(21);
-	b.pushLast(37);
+	a.pushLast(21);
+	a.pushLast(37);
 	b.pushLast(14);
-    b.deleteRepeats();
+	b.pushLast(88);
+    a+=b;
 
-	b.show();
+	a.show();
 }
