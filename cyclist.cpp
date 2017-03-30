@@ -28,10 +28,19 @@ CycList::~CycList()
     }
     lSize=0;
 }
-CycList::Node* CycList::newNode(int indexParam, int valParam)
+void CycList::assignIndexes()
+{
+    int id=0;
+    Node *i=first;
+    if(i) do
+    {
+        i->index=id++;
+        i=i->next;
+    }while(i!=first);
+}
+CycList::Node* CycList::newNode(int valParam)
 {
     Node *tmp = new Node;
-    tmp->index = indexParam;
     tmp->value = valParam;
     if (lSize==0)
     {
@@ -46,6 +55,7 @@ CycList::Node* CycList::newNode(int indexParam, int valParam)
         tmp->prev = last;
     }
     lSize++;
+    assignIndexes();
     return tmp;
 }
 void CycList::deleteNode(Node *n)
@@ -62,21 +72,23 @@ void CycList::deleteNode(Node *n)
         first = NULL;
         last = NULL;
     }
+    assignIndexes();
 }
-void CycList::pushFirst(int indexParam, int valParam)
+void CycList::pushFirst(int valParam)
 {
-    first = newNode(indexParam, valParam);
+    first = newNode(valParam);
     if (lSize == 1) last = first;
+    assignIndexes();
 }
-void CycList::pushLast(int indexParam, int valParam)
+void CycList::pushLast(int valParam)
 {
-    last = newNode(indexParam, valParam);
+    last = newNode(valParam);
     if (lSize == 1) first = last;
+    assignIndexes();
 }
-void CycList::pushAfter(int id, int idNew, int val)
+void CycList::pushAfter(int id, int val)
 {
     Node *tmp = new Node;
-    tmp->index = idNew;
     tmp->value = val;
     for (Node *i = first; i != last; i = i->next)
     {
@@ -90,15 +102,15 @@ void CycList::pushAfter(int id, int idNew, int val)
             return;
         }//if
     }//for
-    if (last && last->index == id) pushLast(idNew, val);
+    if (last && last->index == id) pushLast(val);
+    assignIndexes();
 }
-void CycList::pushBefore(int id, int idNew, int val)
+void CycList::pushBefore(int id, int val)
 {
     Node *tmp = new Node;
-    tmp->index = idNew;
     tmp->value = val;
     if (!first) return;
-    if (first->index == id) pushFirst(idNew, val);
+    if (first->index == id) pushFirst(val);
     else for (Node *i = first->next; i != first; i = i->next)
         {
             if (i->index == id)
@@ -111,6 +123,7 @@ void CycList::pushBefore(int id, int idNew, int val)
                 return;
             }
         }
+    assignIndexes();
 }
 void CycList::pushIndex(int id, int val)
 {
@@ -125,6 +138,7 @@ void CycList::pushIndex(int id, int val)
         i = i->next;
     }
     if (last->index == id) last->value = val;
+    assignIndexes();
 }
 void CycList::findToDelete(string param, int var)//delete index or delete value var2=value or index
 {
@@ -150,10 +164,12 @@ void CycList::findToDelete(string param, int var)//delete index or delete value 
 void CycList::deleteIndex(int id)
 {
     findToDelete("index", id);
+    assignIndexes();
 }
 void CycList::deleteValue(int val)
 {
     findToDelete("value", val);
+    assignIndexes();
 }
 void CycList::deleteBetween(int low, int high)
 {
@@ -175,6 +191,7 @@ void CycList::deleteBetween(int low, int high)
             }
         }
         while (j != first);
+    assignIndexes();
 }
 void CycList::deleteFirst()
 {
@@ -265,12 +282,12 @@ CycList CycList::operator+(const CycList& c)
     Node *j=c.first;
     if(i) do
     {
-        x.pushLast(i->index,i->value);
+        x.pushLast(i->value);
         i=i->next;
     }while(i!=this->first);
     if(j) do
     {
-        x.pushLast(j->index,j->value);
+        x.pushLast(j->value);
         j=j->next;
     }while(j!=c.first);
     return x;
@@ -283,7 +300,7 @@ void CycList::operator=(CycList c)
     Node *i=c.first;
     if(i) do
     {
-        this->pushLast(i->index,i->value);
+        this->pushLast(i->value);
         i=i->next;
     }while(i!=c.first);
 }
@@ -297,13 +314,13 @@ CycList CycList::operator-(CycList& c)
         Node *j=c.first;
         if(j) do
         {
-            n.pushLast(i->index,i->value-j->value);
+            n.pushLast(i->value-j->value);
             i=i->next;
             j=j->next;
         }while(j!=c.first);
         do
         {
-            n.pushLast(i->index,i->value);
+            n.pushLast(i->value);
             i=i->next;
         }while(i!=this->first);
     }//this>=c
@@ -314,7 +331,7 @@ CycList CycList::operator-(CycList& c)
         Node *j=c.first;
         do
         {
-            n.pushLast(i->index, i->value-j->value);
+            n.pushLast(i->value-j->value);
             i=i->next;
             j=j->next;
         }while(i!=this->first);
@@ -325,13 +342,13 @@ CycList CycList::operator-(CycList& c)
         Node *j=c.first;
         if(i) do
         {
-            n.pushLast(i->index,i->value-j->value);
+            n.pushLast(i->value-j->value);
             i=i->next;
             j=j->next;
         }while(i!=this->first);
         do
         {
-            n.pushLast(j->index,-j->value);
+            n.pushLast(-j->value);
             j=j->next;
         }while(j!=c.first);
     }

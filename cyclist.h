@@ -18,16 +18,17 @@ class CycList
 	Node *first;
 	Node *last;
 	int lSize;
-	Node* newNode(int idParam, int valParam);
+	Node* newNode(int valParam);
 	void deleteNode(Node*);
 	void findToDelete(string param, int var);
 public:
 	~CycList();
 	CycList(Node* firstParam = NULL, Node* lastParam = NULL);
-	void pushFirst(int idNew, int val);//id of new node, value of new node
-	void pushLast(int idNew, int val);//id of new node, value of new node
-	void pushAfter(int id, int idNew, int val);//id of previous node, id of new node, value of new node
-	void pushBefore(int id, int idNew, int val);
+	void assignIndexes();
+	void pushFirst(int val);//id of new node, value of new node
+	void pushLast(int val);//id of new node, value of new node
+	void pushAfter(int id, int val);//id of previous node, id of new node, value of new node
+	void pushBefore(int id, int val);
 	void pushIndex(int id, int val);//wstawienie w miejsce wyznaczone przez indeks
 	void deleteIndex(int id);
 	void deleteValue(int val);
