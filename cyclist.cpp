@@ -306,10 +306,22 @@ void CycList::operator=(CycList c)
     }while(i!=c.first);
     this->assignIndexes();
 }
-CycList CycList::operator-(CycList& c)
+CycList CycList::operator-(const CycList& c)
 {
     CycList n;
-
+    Node *i=this->first;
+    Node *j=c.first;
+    if(i) do
+    {
+        n.pushLast(i->value);
+        i=i->next;
+    }while(i!=this->first);
+    if(j) do
+    {
+        n.deleteValue(j->value);
+        j=j->next;
+    }while(j!=c.first);
+    return n;
 }
 void CycList::operator+=(const CycList& a)
 {

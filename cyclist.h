@@ -42,7 +42,7 @@ public:
 	void show();
 	void operator=(CycList);
 	CycList operator+(const CycList&);
-	CycList operator-(CycList&);
+	CycList operator-(const CycList&);
 	void operator+=(const CycList&);
 	bool operator<(CycList&);
 	bool operator<=(CycList& c);

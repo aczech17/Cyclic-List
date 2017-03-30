@@ -11,9 +11,9 @@ int main()
 	CycList a,b;
 	a.pushLast(21);
 	a.pushLast(37);
-	b.pushLast(14);
+	b.pushLast(21);
 	b.pushLast(88);
-    a+=b;
+    CycList c=b-a;
 
-	a.show();
+	c.show();
 }
