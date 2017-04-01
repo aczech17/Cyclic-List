@@ -33,8 +33,6 @@ public:
 	void deleteBetween(int low, int high);
 	void deleteFirst();
 	void deleteLast();
-	Node* nodeValue(int val);//pobranie z listy elementu o okreœlonej wartoœci
-	Node* nodeIndex(int id);//--------------||------------ o okreœlonym indeksie
 	void deleteRepeats();
 	int quantity();
 	void operator=(CycList);
