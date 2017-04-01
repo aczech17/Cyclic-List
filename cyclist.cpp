@@ -84,19 +84,22 @@ void CycList::pushAfter(int id, int val)
 {
     Node *tmp = new Node;
     tmp->value = val;
-    for (Node *i = first; i != last; i = i->next)
+    Node *i=first;
+    if(i) do
     {
-        if (i->index == id)
+        if(i->index==id)
         {
-            tmp->next = i->next;
-            tmp->prev = i;
-            i->next->prev = tmp;
-            i->next = tmp;
+            tmp->next=i->next;
+            tmp->prev=i;
+            i->next->prev=tmp;
+            i->next=tmp;
+            if(i==last) last=tmp;
             lSize++;
+            assignIndexes();
             return;
-        }//if
-    }//for
-    if (last && last->index == id) pushLast(val);
+        }
+        i=i->next;
+    }while(i!=first);
     assignIndexes();
 }
 void CycList::pushBefore(int id, int val)
@@ -114,10 +117,10 @@ void CycList::pushBefore(int id, int val)
                 i->prev->next = tmp;
                 i->prev = tmp;
                 lSize++;
+                assignIndexes();
                 return;
             }
         }
-    assignIndexes();
 }
 void CycList::pushIndex(int id, int val)
 {
@@ -146,6 +149,7 @@ void CycList::findToDelete(const char param, int var)//delete index or delete va
                 deleteNode(i);
                 if (this->quantity() != 0) i = j;
                 else j = NULL;
+                return;
             }
             else
             {

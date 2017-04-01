@@ -19,10 +19,10 @@ class CycList
 	Node* newNode(int valParam);
 	void deleteNode(Node*);
 	void findToDelete(const char param, int var);
+	void assignIndexes();
 public:
 	~CycList();
 	CycList(Node* firstParam = NULL, Node* lastParam = NULL);
-	void assignIndexes();
 	void pushFirst(int val);//id of new node, value of new node
 	void pushLast(int val);//id of new node, value of new node
 	void pushAfter(int id, int val);//id of previous node, id of new node, value of new node
@@ -47,6 +47,5 @@ public:
 	bool operator!=(CycList&);
 	void operator!();
 	int node(int);
-	int end();
 };
 #endif
