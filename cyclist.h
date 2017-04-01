@@ -1,7 +1,6 @@
 #ifndef CYC_LIST
 #define CYC_LIST
 #include <iostream>
-using std::string;
 class CycList
 {
 	class Node
@@ -13,14 +12,13 @@ class CycList
 		//~Node();
 		Node *next;
 		Node *prev;
-		Node operator+(Node n);
 	};//Node
 	Node *first;
 	Node *last;
 	int lSize;
 	Node* newNode(int valParam);
 	void deleteNode(Node*);
-	void findToDelete(string param, int var);
+	void findToDelete(const char param, int var);
 public:
 	~CycList();
 	CycList(Node* firstParam = NULL, Node* lastParam = NULL);
@@ -39,7 +37,6 @@ public:
 	Node* nodeIndex(int id);//--------------||------------ o okreœlonym indeksie
 	void deleteRepeats();
 	int quantity();
-	void show();
 	void operator=(CycList);
 	CycList operator+(const CycList&);
 	CycList operator-(const CycList&);
@@ -51,5 +48,7 @@ public:
 	bool operator==(CycList&);
 	bool operator!=(CycList&);
 	void operator!();
+	int node(int);
+	int end();
 };
 #endif

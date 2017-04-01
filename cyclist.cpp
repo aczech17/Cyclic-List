@@ -1,9 +1,5 @@
 #include "cyclist.h"
-#include <iostream>
-#include <climits>
-using std::cout;
-using std::endl;
-using std::string;
+
 CycList::CycList(Node* firstParam, Node* lastParam)
 {
     this->first = firstParam;
@@ -138,13 +134,13 @@ void CycList::pushIndex(int id, int val)
     if (last->index == id) last->value = val;
     assignIndexes();
 }
-void CycList::findToDelete(string param, int var)//delete index or delete value var2=value or index
+void CycList::findToDelete(const char param, int var)//delete index or delete value var2=value or index
 {
     Node *i = first;
     Node *j = i;
     if(i) do
         {
-            if( (param=="index" && i->index==var) || (param=="value" && i->value==var) )
+            if( (param=='i' && i->index==var) || (param=='v' && i->value==var) )
             {
                 j = i->next;
                 deleteNode(i);
@@ -161,12 +157,12 @@ void CycList::findToDelete(string param, int var)//delete index or delete value 
 }
 void CycList::deleteIndex(int id)
 {
-    findToDelete("index", id);
+    findToDelete('i', id);
     assignIndexes();
 }
 void CycList::deleteValue(int val)
 {
-    findToDelete("value", val);
+    findToDelete('v', val);
     assignIndexes();
 }
 void CycList::deleteBetween(int low, int high)
@@ -201,42 +197,10 @@ void CycList::deleteLast()
     deleteNode(last);
     assignIndexes();
 }
-CycList::Node* CycList::nodeValue(int val)
-{
-    Node *i=first;
-    if(i) do
-        {
-            if(i->value==val) return i;
-            i=i->next;
-        }
-        while(i!=first);
-    return NULL;
-}
-CycList::Node* CycList::nodeIndex(int id)
-{
-    Node *i=first;
-    if(i) do
-        {
-            if(i->index==id) return i;
-            i=i->next;
-        }
-        while(i!=first);
-    return NULL;
-}
+
 int CycList::quantity()
 {
     return lSize;
-}
-void CycList::show()
-{
-    cout << "Index\tValue" << endl;
-    Node *i = first;
-    if(i) do
-        {
-            cout<<i->index<<'\t'<<i->value<<endl;
-            i=i->next;
-        }
-        while(i!=first);
 }
 bool CycList::operator==(CycList& c)
 {
@@ -346,4 +310,14 @@ void CycList::deleteRepeats()
     }while(i!=first);
     assignIndexes();
     delete [] rep;
+}
+int CycList::node(int id)
+{
+    Node *i=first;
+    if(i) do
+    {
+        if(i->index==id) return i->value;
+        i=i->next;
+    }while(i!=first);
+    return 0;
 }
