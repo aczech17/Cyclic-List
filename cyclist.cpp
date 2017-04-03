@@ -40,25 +40,7 @@ void CycList::assignIndexes()
         i=i->next;
     }
 }
-//CycList::Node* CycList::newNode(int valParam)
-//{
-//    Node *tmp = new Node;
-//    tmp->value = valParam;
-//    if (lSize==0)
-//    {
-//        tmp->next = tmp;
-//        tmp->prev = tmp;
-//    }
-//    else
-//    {
-//        tmp->next = first;
-//        first->prev = tmp;
-//        last->next = tmp;
-//        tmp->prev = last;
-//    }
-//    lSize++;
-//    return tmp;
-//}
+
 void CycList::deleteNode(Node *n)
 {
     if (!n) return;
