@@ -28,6 +28,7 @@ CycList::~CycList()
         }
     }
     lSize=0;
+    delete sentinel;
 }
 void CycList::assignIndexes()
 {
