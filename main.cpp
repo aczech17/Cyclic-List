@@ -20,8 +20,9 @@ int main()
     do
     {
         cout<<"Zawartość listy"<<endl;
-        for(int i=0; i<c.quantity(); i++)
-            cout<<c.node(i)<<endl;
+        CycList::iterator it;
+        for(it=c.begin();it!=c.end();++it)
+            cout<<*it<<endl;
         cout<<"Liczba elementów listy: "<<c.quantity()<<endl<<endl;
         cout<<"1. Dodaj liczbę na początek listy"<<endl;
         cout<<"2. Dodaj element na koniec listy"<<endl;
@@ -29,7 +30,7 @@ int main()
         cout<<"4. Dodaj element przed elementem o określonym indeksie"<<endl;
         cout<<"5. Zapisz liczbę do elementu o określonym indeksie"<<endl;
         cout<<"6. Usuń element o określonym indeksie"<<endl;
-        cout<<"7. Usuń pierwszy element o określonej wartości"<<endl;
+        cout<<"7. Usuń elementy o określonej wartości"<<endl;
         cout<<"8. Usuń elementy o wartościach z podanego przedziału"<<endl;
         cout<<"9. Usuń pierwszy element"<<endl;
         cout<<"10. Usuń ostatni element"<<endl;
@@ -198,5 +199,6 @@ int main()
         system("clear");
     }
     while(option!=12);
+
     return 0;
 }

@@ -3,26 +3,27 @@
 #include <iostream>
 class CycList
 {
+    int lSize;
 	class Node
 	{
 		friend class CycList;
+		friend class iterator;
 		int index;
 		int value;
-		Node(int val = 0, int id = 0) : index(id), value(val) {}
-		//~Node();
+		Node(int id = 0, int val = 0) : index(id), value(val) {}
 		Node *next;
 		Node *prev;
 	};//Node
 	Node *first;
 	Node *last;
-	int lSize;
-	Node* newNode(int valParam);
+	Node *sentinel;
 	void deleteNode(Node*);
-	void findToDelete(const char param, int var);
 	void assignIndexes();
 public:
 	~CycList();
-	CycList(Node* firstParam = NULL, Node* lastParam = NULL);
+	CycList();
+	Node* begin();
+	Node* end();
 	void pushFirst(int val);//id of new node, value of new node
 	void pushLast(int val);//id of new node, value of new node
 	void pushAfter(int id, int val);//id of previous node, id of new node, value of new node
@@ -46,6 +47,16 @@ public:
 	bool operator==(CycList&);
 	bool operator!=(CycList&);
 	void operator!();
-	int node(int);
+	class iterator
+	{
+	    Node *i;
+    public:
+	    void operator=(Node*);
+	    int operator*();
+	    void operator++();
+	    void operator--();
+	    bool operator==(Node*);
+	    bool operator!=(Node*);
+	};
 };
 #endif
