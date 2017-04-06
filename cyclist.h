@@ -36,7 +36,7 @@ public:
 	void deleteLast();
 	void deleteRepeats();
 	int quantity();
-	void operator=(CycList);
+	CycList operator=(CycList);
 	CycList operator+(const CycList&);
 	CycList operator-(const CycList&);
 	void operator+=(const CycList&);

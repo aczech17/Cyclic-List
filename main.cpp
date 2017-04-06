@@ -2,6 +2,11 @@
 #include <cstdlib>
 #include <cstdio>
 #include "cyclist.h"
+#ifdef WIN32
+#define CLEAR system("cls");
+#else
+#define CLEAR system("clear");
+#endif // system
 using std::cin;
 using std::cout;
 using std::endl;
@@ -11,7 +16,7 @@ void notANumber()
     cin.clear();
     cin.ignore(1000,'\n');
     getchar();
-    system("clear");
+    CLEAR;
 }
 int main()
 {
@@ -21,7 +26,7 @@ int main()
     {
         cout<<"Zawartość listy"<<endl;
         CycList::iterator it;
-        for(it=c.begin();it!=c.end();++it)
+        for(it=c.begin(); it!=c.end(); ++it)
             cout<<*it<<endl;
         cout<<"Liczba elementów listy: "<<c.quantity()<<endl<<endl;
         cout<<"1. Dodaj liczbę na początek listy"<<endl;
@@ -38,15 +43,6 @@ int main()
         cout<<"12. Wyjście"<<endl;
         cout<<"Wybierz opcję: ";
         cin>>option;
-        if(!cin.good() || option<1 || option>12)
-        {
-            cout<<"Wpisz liczbe od 1 do 10";
-            cin.clear();
-            cin.ignore(1000,'\n');
-            getchar();
-            system("clear");
-            continue;
-        }
         switch(option)
         {
         case 1:
@@ -54,12 +50,8 @@ int main()
             int v;
             cout<<"Podaj liczbę: ";
             cin>>v;
-            if(!cin.good())
-            {
-                notANumber();
-                continue;
-            }
-            c.pushFirst(v);
+            if(!cin.good()) notANumber();
+            else c.pushFirst(v);
             break;
         }//dodawanie na początek
         case 2:
@@ -67,12 +59,9 @@ int main()
             int v;
             cout<<"Podaj liczbę: ";
             cin>>v;
-            if(!cin.good())
-            {
-                notANumber();
-                continue;
-            }
-            c.pushLast(v);
+            if(!cin.good()) notANumber();
+            else
+                c.pushLast(v);
             break;
         }//dodawanie na koniec
         case 3:
@@ -118,87 +107,88 @@ int main()
         case 5:
         {
             int id,v;
-                cout<<"Jaką liczbę chcesz dodać?: ";
-                cin>>v;
-                if(!cin.good())
-                {
-                    notANumber();
-                    continue;
-                }
-                cout<<"Do którego elementu chcesz ją dodać?: ";
-                cin>>id;
-                if(!cin.good())
-                {
-                    notANumber();
-                    continue;
-                }
-                c.pushIndex(id,v);
-                break;
+            cout<<"Jaką liczbę chcesz dodać?: ";
+            cin>>v;
+            if(!cin.good())
+            {
+                notANumber();
+                continue;
+            }
+            cout<<"Do którego elementu chcesz ją dodać?: ";
+            cin>>id;
+            if(!cin.good())
+            {
+                notANumber();
+                continue;
+            }
+            c.pushIndex(id,v);
+            break;
         }//zapisz w indeksie
         case 6:
-            {
-                int id;
-                cout<<"Który element chcesz usunąć?: ";
-                cin>>id;
-                if(!cin.good())
-                {
-                    notANumber();
-                    continue;
-                }
-                c.deleteIndex(id);
-                break;
-            }//usuń indeks
+        {
+            int id;
+            cout<<"Który element chcesz usunąć?: ";
+            cin>>id;
+            if(!cin.good()) notANumber();
+            else c.deleteIndex(id);
+            break;
+        }//usuń indeks
         case 7:
-            {
-                int v;
-                cout<<"Którą wartość chcesz usunąć?: ";
-                cin>>v;
-                if(!cin.good())
-                {
-                    notANumber();
-                    continue;
-                }
-                c.deleteValue(v);
-                break;
-            }//usun wartość
+        {
+            int v;
+            cout<<"Którą wartość chcesz usunąć?: ";
+            cin>>v;
+            if(!cin.good()) notANumber();
+            else c.deleteValue(v);
+            break;
+        }//usun wartość
         case 8:
+        {
+            int a,b;
+            cout<<"Z jakiego przedziału chcesz usunąć liczby?: ";
+            cin>>a;
+            if(!cin.good())
             {
-                int a,b;
-                cout<<"Z jakiego przedziału chcesz usunąć liczby?: ";
-                cin>>a;
-                if(!cin.good())
-                {
-                    notANumber();
-                    continue;
-                }
-                cin>>b;
-                if(!cin.good())
-                {
-                    notANumber();
-                    continue;
-                }
-                c.deleteBetween(a,b);
-                break;
-            }//usun liczby z przedzialu
+                notANumber();
+                continue;
+            }
+            cin>>b;
+            if(!cin.good())
+            {
+                notANumber();
+                continue;
+            }
+            c.deleteBetween(a,b);
+            break;
+        }//usun liczby z przedzialu
         case 9:
-            {
-                c.deleteFirst();
-                break;
-            }
+        {
+            c.deleteFirst();
+            break;
+        }
         case 10:
-            {
-                c.deleteLast();
-                break;
-            }
+        {
+            c.deleteLast();
+            break;
+        }
         case 11:
-            {
-                c.deleteRepeats();
-                break;
-            }
+        {
+            c.deleteRepeats();
+            break;
+        }
+        case 12:
+            break;
+        default:
+        {
+            cout<<"Wpisz liczbe od 1 do 10";
+            cin.clear();
+            cin.ignore(1000,'\n');
+            getchar();
+            CLEAR;
+        }
         }//switch
-        system("clear");
+        CLEAR;
     }
     while(option!=12);
-
     return 0;
 }

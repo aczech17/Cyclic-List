@@ -50,11 +50,6 @@ void CycList::deleteNode(Node *n)
     if (n == last) last = last->prev;
     delete n;
     lSize--;
-    if (lSize == 0)
-    {
-        first = NULL;
-        last = NULL;
-    }
 }
 void CycList::pushFirst(int valParam)
 {
@@ -266,8 +261,9 @@ CycList CycList::operator+(const CycList& c)
     return x;
 }
 
-void CycList::operator=(CycList c)
+CycList CycList::operator=(CycList c)
 {
+    if(*this==c) return c;
     while(this->quantity()>0)
         this->deleteFirst();
     Node *i=c.first;
@@ -277,6 +273,7 @@ void CycList::operator=(CycList c)
         i=i->next;
     }
     this->assignIndexes();
+    return *this;
 }
 CycList CycList::operator-(const CycList& c)
 {
@@ -334,7 +331,8 @@ void CycList::iterator::operator=(CycList::Node* n)
 }
 int CycList::iterator::operator*()
 {
-    if(i) return i->value;
+    if(i->index>=0) return i->value;
+    else return 0;
 }
 void CycList::iterator::operator++()
 {
